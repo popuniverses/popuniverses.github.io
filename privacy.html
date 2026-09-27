@@ -1,0 +1,418 @@
+<title>Pop Universe Privacy</title>
+<style>
+  :root {
+    --bg: #faf9f6;
+    --surface: #ffffff;
+    --text: #1f2421;
+    --text-secondary: #5b6560;
+    --accent: #0e7c86;
+    --accent-soft: #e4f1f1;
+    --border: #e3e0d8;
+    --mono-chip-bg: #f1efe9;
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14181a;
+      --surface: #1b2124;
+      --text: #eceee9;
+      --text-secondary: #9ba6a1;
+      --accent: #4fd3de;
+      --accent-soft: #1e3336;
+      --border: #2a3134;
+      --mono-chip-bg: #20272a;
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #14181a;
+    --surface: #1b2124;
+    --text: #eceee9;
+    --text-secondary: #9ba6a1;
+    --accent: #4fd3de;
+    --accent-soft: #1e3336;
+    --border: #2a3134;
+    --mono-chip-bg: #20272a;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+    padding-inline: 20px;
+    padding-block: 48px;
+  }
+
+  .page {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .masthead {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 28px;
+    margin-bottom: 36px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  h1 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(1.9rem, 5vw, 2.6rem);
+    line-height: 1.1;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .chip {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.74rem;
+    color: var(--text-secondary);
+    background: var(--mono-chip-bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .intro {
+    color: var(--text-secondary);
+    font-size: 1.02rem;
+    line-height: 1.65;
+    max-width: 62ch;
+    margin-bottom: 8px;
+  }
+
+  section.doc-section {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 20px;
+    padding-block: 26px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  section.doc-section:last-of-type {
+    border-bottom: none;
+  }
+
+  .section-num {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+    padding-top: 3px;
+  }
+
+  .section-body h2 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: 1.28rem;
+    margin: 0 0 12px 0;
+    text-wrap: balance;
+  }
+
+  .section-body p {
+    color: var(--text);
+    line-height: 1.7;
+    margin: 0 0 12px 0;
+    max-width: 62ch;
+  }
+
+  .section-body p:last-child { margin-bottom: 0; }
+
+  .section-body ul {
+    margin: 0 0 12px 0;
+    padding-left: 1.2em;
+    max-width: 62ch;
+  }
+
+  .section-body li {
+    line-height: 1.7;
+    margin-bottom: 8px;
+  }
+
+  .section-body li:last-child { margin-bottom: 0; }
+
+  .section-body strong { color: var(--text); }
+
+  .service-table {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 4px;
+    font-size: 0.92rem;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 10px 14px 10px 0;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  th {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  td { color: var(--text); line-height: 1.5; }
+  td.muted { color: var(--text-secondary); }
+
+  .contact-card {
+    background: var(--accent-soft);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 22px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 28px;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .contact-card a {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .contact-card a:hover { text-decoration: underline; }
+
+  .contact-label {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  footer {
+    margin-top: 44px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  @media (max-width: 460px) {
+    section.doc-section {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+    .section-num { padding-top: 0; }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<div class="page">
+
+  <div class="masthead">
+    <span class="eyebrow">Pop Universe · Privacy Policy</span>
+    <h1>How Pop Universe handles your data</h1>
+    <div class="meta-row">
+      <span class="chip">Effective 27 Sep 2026</span>
+      <span class="chip">com.zazstudios.popuniverse</span>
+      <span class="chip">Published by AmazeIT</span>
+    </div>
+    <p class="intro">
+      Pop Universe is a bubble‑popping puzzle game. This page explains, in plain
+      language, what information the app collects, why, and the choices you
+      have. It applies to the Android and iOS versions of Pop Universe.
+    </p>
+  </div>
+
+  <section class="doc-section">
+    <div class="section-num">01</div>
+    <div class="section-body">
+      <h2>Information we collect</h2>
+      <p>
+        Pop Universe does not require you to create an account and does not
+        ask for your name, email address, or phone number to play. The app
+        does collect the following, automatically, to keep the game running
+        and to understand how it's used:
+      </p>
+      <ul>
+        <li><strong>Anonymous player ID.</strong> On first launch the app creates an anonymous sign‑in (via Firebase Authentication) with no personal details attached, used only to save your progress and leaderboard scores.</li>
+        <li><strong>Gameplay progress.</strong> Level completion, high scores, and coin balances are stored against that anonymous ID (via Cloud Firestore) so your progress can sync if you reinstall.</li>
+        <li><strong>Usage analytics.</strong> Anonymous, aggregated events — such as which game mode was opened or a level was completed — via Firebase Analytics, to help us understand which features are used.</li>
+        <li><strong>Crash and diagnostic reports.</strong> If the app crashes or hits an error, technical details (via Firebase Crashlytics) are sent to help us fix bugs.</li>
+        <li><strong>Device and app information.</strong> Device model, operating system version, and the installed app version, used for compatibility and support.</li>
+      </ul>
+      <p>Game settings such as sound and vibration preferences are stored only on your device and are never transmitted anywhere.</p>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <div class="section-num">02</div>
+    <div class="section-body">
+      <h2>Advertising</h2>
+      <p>
+        Pop Universe shows ads through Google AdMob (Google Mobile Ads) to
+        support free play. AdMob may use an advertising identifier to serve
+        ads and measure their performance. On iOS, the app asks for your
+        permission via Apple's App Tracking Transparency prompt before any
+        data is used for tracking or personalized advertising — you can
+        decline this and still play the game with non‑personalized ads.
+      </p>
+      <p>Google's own privacy policy covers how AdMob handles this data: <a href="https://policies.google.com/privacy" style="color:var(--accent)">policies.google.com/privacy</a>.</p>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <div class="section-num">03</div>
+    <div class="section-body">
+      <h2>In‑app purchases</h2>
+      <p>
+        Optional in‑app purchases (such as coin packs) are processed entirely
+        by Google Play or the Apple App Store. Pop Universe never sees or
+        stores your card number, billing address, or other payment details —
+        that information stays with Google or Apple under their own
+        payment and privacy terms.
+      </p>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <div class="section-num">04</div>
+    <div class="section-body">
+      <h2>Children's privacy</h2>
+      <p>
+        Pop Universe is a general‑audience puzzle game. We do not knowingly
+        collect personal information — such as a name, email address, or
+        exact location — from anyone, including children. The anonymous
+        identifiers and gameplay data described above are not personally
+        identifiable on their own.
+      </p>
+      <p>
+        If you are a parent or guardian and believe your child has provided
+        us with information that concerns you, contact us at the address
+        below and we will review and delete it.
+      </p>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <div class="section-num">05</div>
+    <div class="section-body">
+      <h2>Who we share data with</h2>
+      <p>We do not sell your data. Information is shared only with the service providers that help operate the app, each bound by their own privacy terms:</p>
+      <div class="service-table">
+        <table>
+          <thead>
+            <tr><th>Provider</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Google Firebase</td><td class="muted">Anonymous sign‑in, save data, analytics, crash reporting</td></tr>
+            <tr><td>Google AdMob</td><td class="muted">In‑app advertising</td></tr>
+            <tr><td>Google Play / Apple App Store</td><td class="muted">Purchases and billing</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <div class="section-num">06</div>
+    <div class="section-body">
+      <h2>Your choices and data retention</h2>
+      <p>
+        Anonymous gameplay data is kept for as long as your account is active
+        so your progress and leaderboard position are preserved. You can ask
+        us to delete it at any time by emailing the address below with your
+        in‑game username or approximate last‑played date so we can locate
+        your record. Uninstalling the app removes all locally stored
+        settings from your device immediately.
+      </p>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <div class="section-num">07</div>
+    <div class="section-body">
+      <h2>Security</h2>
+      <p>
+        We use reasonable technical and organizational measures — including
+        the security provided by Google Firebase's infrastructure — to
+        protect the data described above. No method of storage or
+        transmission over the internet is completely secure, so we can't
+        guarantee absolute security.
+      </p>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <div class="section-num">08</div>
+    <div class="section-body">
+      <h2>Changes to this policy</h2>
+      <p>
+        If this policy changes, we'll update the effective date at the top of
+        this page. We encourage you to check back occasionally, especially
+        before providing any information through the app.
+      </p>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <div class="section-num">09</div>
+    <div class="section-body">
+      <h2>Contact us</h2>
+      <p>Questions about this policy or a request to review or delete your data can be sent directly to the developer:</p>
+      <div class="contact-card">
+        <div>
+          <span class="contact-label">Email</span>
+          <a href="mailto:zubairahmed25@hotmail.com">zubairahmed25@hotmail.com</a>
+        </div>
+        <div>
+          <span class="contact-label">Developer</span>
+          <span>AmazeIT</span>
+        </div>
+        <div>
+          <span class="contact-label">App</span>
+          <span>Pop Universe</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 AmazeIT. All rights reserved.</span>
+    <span>Pop Universe Privacy Policy</span>
+  </footer>
+
+</div>
